@@ -1,0 +1,15 @@
+pipeline {
+    agent any
+    environment {
+        BUCKET = 'jenking-demo'
+        AWS_REGION = 'us-east-1'
+    }
+    stages {
+        stage('deploy to s3') {
+            steps {
+                echo "Deploying to S3 bucket: ${BUCKET} in region ${AWS_REGION}"
+                // Aquí irían los pasos para desplegar en S3
+            }
+        }
+    }
+}

@@ -9,7 +9,7 @@ pipeline {
         stage('Deploy to S3') {
             steps {
                 script {
-                    withAWS(credentials: 'nico-jenkins', region: 'us-east-1') {
+                    withAWS(credentials: 'aws-cli', region: 'us-east-1') {
                         sh "aws s3 sync . s3://\$BUCKET --exclude '.git/*'"
                         sh "aws s3 ls s3://\$BUCKET"
                     }

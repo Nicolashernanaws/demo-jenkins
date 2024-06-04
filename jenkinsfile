@@ -1,14 +1,18 @@
 pipeline {
     agent any
+
     environment {
         BUCKET = "jenking-demo"
     }
+
     stages {
-        stage('deploy to s3') {
+        stage('Deploy to S3') {
             steps {
-                withAWS(credentials: 'nico-jenkins' region: 'us-east-1') {
-                    sh 'aws s3 sync . s3://$BUCKET --exclude ".git/*"'
-                    sh 'aws s3 ls s3://$BUCKET'
+                script {
+                    withAWS(credentials: 'nico-jenkins', region: 'us-east-1') {
+                        sh "aws s3 sync . s3://\$BUCKET --exclude '.git/*'"
+                        sh "aws s3 ls s3://\$BUCKET"
+                    }
                 }
             }
         }

@@ -1,25 +1,30 @@
 pipeline {
     agent any
 
-    environment {
-        BUCKET = "jenking-demo"  // Nombre del bucket S3 donde deseas desplegar los archivos
-    }
-
     stages {
-        stage('Deploy to S3') {
+        stage('Checkout SCM') {
             steps {
-                script {
-                    // Utilizamos script para ejecutar múltiples comandos de shell
-                    withAWS(credentials: 'nico-jenkins', region: 'us-east-1') {
-                        // Utilizamos comillas dobles para permitir la expansión de variables en Groovy
-                        sh "aws s3 sync . s3://\$BUCKET --exclude '.git/*'"
-                        sh "aws s3 ls s3://\$BUCKET"
-                    }
-                }
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building...'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
             }
         }
     }
 }
+
 
 
 

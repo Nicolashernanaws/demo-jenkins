@@ -3,18 +3,19 @@ pipeline {
 
     environment {
         BUCKET = "jenking-demo"
+        AWS_DEFAULT_REGION = 'us-east-1'
     }
 
     stages {
         stage('Deploy to S3') {
             steps {
                 script {
-                    withAWS(credentials: 'aws-cli', region: 'us-east-1') {
-                        sh "aws s3 sync . s3://\$BUCKET --exclude '.git/*'"
-                        sh "aws s3 ls s3://\$BUCKET"
-                    }
+                    sh "aws configure set region ${AWS_DEFAULT_REGION}"
+                    sh "aws s3 sync . s3://$BUCKET --exclude '.git/*'"
+                    sh "aws s3 ls s3://$BUCKET"
                 }
             }
         }
     }
 }
+

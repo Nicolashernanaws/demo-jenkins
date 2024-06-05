@@ -6,16 +6,27 @@ pipeline {
     }
 
     stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Deploy to S3') {
+            agent {
+                label 'windows' // Esto asegura que esta etapa se ejecute en un nodo Windows
+            }
             steps {
                 script {
-                    bat "C:\\Users\\nico\\demo-jenkins\\aws s3 sync . s3://\$BUCKET --exclude '.git/*'"
-                    bat "C:\\Users\\nico\\demo-jenkins\\aws s3 ls s3://\$BUCKET"
+                    bat "aws configure set region us-east-1"
+                    bat "aws s3 sync . s3://$BUCKET --exclude '.git/*'"
+                    bat "aws s3 ls s3://$BUCKET"
                 }
             }
         }
     }
 }
+
 
 
 

@@ -10,12 +10,13 @@ pipeline {
         stage('Deploy to S3') {
             steps {
                 script {
-                    sh "aws configure set region ${AWS_DEFAULT_REGION}"
-                    sh "aws s3 sync . s3://$BUCKET --exclude '.git/*'"
-                    sh "aws s3 ls s3://$BUCKET"
+                    sh "/usr/local/bin/aws configure set region ${AWS_DEFAULT_REGION}"
+                    sh "/usr/local/bin/aws s3 sync . s3://$BUCKET --exclude '.git/*'"
+                    sh "/usr/local/bin/aws s3 ls s3://$BUCKET"
                 }
             }
         }
     }
 }
+
 

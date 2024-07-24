@@ -1,0 +1,13 @@
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-0d191299f2822b1fa 
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          echo "UserData ejecutado" > /tmp/userdata-output.txt
+      Tags:
+        - Key: Name
+          Value: MiInstanciaEC2
